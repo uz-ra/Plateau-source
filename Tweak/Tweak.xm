@@ -196,10 +196,12 @@ target = 3;
 target = 4;
 } 
 if([[%c(SBOrientationLockManager) sharedInstance] isUserLocked] && [[%c(SBOrientationLockManager) sharedInstance] userLockOrientation] == target){
-                [_feedback notificationOccurred:UINotificationFeedbackTypeSuccess];
+                [_feedback notificationOccurred:UINotificationFeedbackTypeError];
+
 [[%c(SBOrientationLockManager) sharedInstance] unlock];
 } else{
-                [_feedback notificationOccurred:UINotificationFeedbackTypeError];
+                [_feedback notificationOccurred:UINotificationFeedbackTypeSuccess];
+
 //1=Portrait Up, 2 = Portrait Down, 3= Landscape Right, 4= Landscape Left 
 [[%c(SBOrientationLockManager) sharedInstance] lock:target];
 }
@@ -273,10 +275,6 @@ PTexpanded=NO;
 %end
 
 %hook SBGrabberTongue
--(void)_pullGestureBegan:(id)arg1 {
-[GrabberView PTdismiss];
-%orig;
-}
 
 -(BOOL)gestureRecognizerShouldBegin:(id)arg1 {
 if(%orig==YES){
